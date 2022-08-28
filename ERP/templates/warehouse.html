@@ -1,0 +1,106 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+{% block site_name %}Warehouse Management{% endblock %}
+
+{% block site %}
+<div class="container-fluid px-4">
+    <div class="row g-3 my-5">
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{products|length}}</h3>
+                    <p class="fs-5">Products</p>
+                </div>
+                <i class="fa-solid fa-box-open fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{warehouse_value}} zł</h3>
+                    <p class="fs-5">Warehouse value</p>
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 my-5">
+        <div class="col-md-3">
+            <form class="d-flex">
+                <input class="form-control" id="myInput" type="text" placeholder="Search">
+            </form>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col g-3 my-3">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <br>
+                <table id="MagTable" class="table bg-white rounded shadow-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">In Stock</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Product category</th>
+                            <th scope="col">Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        {% for Product in products %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ Product.name }}</td>
+                            <td>{{ Product.unit }}</td>
+                            <td>{{ Product.quantity }}</td>
+                            <td>{{ Product.price }}</td>
+                            <td>{{ Product.category }}</td>
+                            <td><a id="edit_product_button" href="{% url 'Edit_product' Product.id%}"
+                                    class="btn btn-primary" role="button">Edit <i
+                                        class="fa-solid fa-pen-to-square film-icon"></i></a>
+                                <a id="remove_product_button" href="{% url 'Remove_produkt' Product.id%}"
+                                    class="btn btn-primary" role="button">Remove <i
+                                        class="fa-solid fa-trash film-icon"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-1 my-2">
+        <div class="col-md-1">
+            <a id="new_product_button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_product"
+                role="button">New product</a>
+        </div>
+    </div>
+
+    <!--    Modal nowy produkt-->
+    <div class="modal fade" id="new_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">New product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|bootstrap }}
+                        <div class="modal-footer">
+                            <button id="new_product_button" type="submit" class="btn btn-success"
+                                role="button">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

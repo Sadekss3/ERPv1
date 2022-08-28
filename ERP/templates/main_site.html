@@ -1,0 +1,94 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+{% block site_name %}Overview Panel{% endblock %}
+{% block site %}
+
+<h3 style="color: hsl(221, 64%, 68%)">Work in progress</h3>
+
+<div class="container-fluid px-4">
+    <div class="row g-3 my-2">
+
+        <h3 class="fs-4 mb-3">Projects:</h3>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div class="md-3">
+                    <h3 class="fs-2">{{projects_number}}</h3>
+                    <p class="fs-5">All Projects</p>
+                </div>
+                <div class="md-3">
+                    <i class="fa-solid fa-bars-progress fs-1 border rounded-full secondary-bg p-3"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{projects_number}}</h3>
+                    <p class="fs-5">Active Projects</p>
+                </div>
+                <div class="md-3">
+                    <i class="fa-solid fa-list-check fs-1 border rounded-full secondary-bg p-3"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-3 my-2">
+
+        <h3 class="fs-4 mb-3">Warehouse:</h3>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{warehouse_value}} zł</h3>
+                    <p class="fs-5">Warehouse Value</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-sack-dollar fs-1 border rounded-full secondary-bg p-3"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{products|length}}</h3>
+                    <p class="fs-5">Products in Stock</p>
+                </div>
+                <i class="fa-solid fa-box-open fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-3 my-2">
+
+        <h3 class="fs-4 mb-3">Bookkeeping</h3>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{budget_summary}} zł</h3>
+                    <p class="fs-5">All Costs</p>
+                </div>
+                <i class="fas fa-hand-holding-dollar fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{income_summary}} zł</h3>
+                    <p class="fs-5">All Income</p>
+                </div>
+                <i class="fas fa-chart-line fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

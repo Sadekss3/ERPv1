@@ -1,0 +1,81 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+{% block site_name %}Projects{% endblock %}
+{% block site %}
+
+<div class="container-fluid px-4">
+    <div class="row my-5">
+        <div class="col-md-3">
+            <form class="d-flex">
+                <input class="form-control" id="myInput" type="text" placeholder="Search">
+            </form>
+        </div>
+        <div class="row my-5">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <br>
+                <table id="MagTable" class="table bg-white rounded shadow-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">Construction  site adress</th>
+                            <th scope="col">Budget from offer</th>
+                            <th scope="col">current cost</th>
+                            <th scope="col">Projected income</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        {% for Project in project %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ Project.name }}</td>
+                            <td>{{ Project.start_time }}</td>
+                            <td>{{ Project.street }}/{{ Project.house_number }},
+                                {{Project.postal_code|make_list|slice:'0:2'|join:''}}-{{Project.postal_code|make_list|slice:'2:6'|join:'' }} {{ Project.town}} </td>
+                            <td>{{ Project.budget }}</td>
+                            <td>??</td>
+                            <td>??</td>
+                            <td>??</td>
+                            <td><a id="edit_product_button" href="{% url 'Edit_project' Project.id%}"
+                                    class="btn btn-primary" role="button">Show <i
+                                        class="fa-solid fa-pen-to-square film-icon"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row g-1 my-2">
+        <div class="col-md-1">
+            <a id="new_product_button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_project"
+                role="button">New Project</a>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new_project" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|bootstrap }}
+                        <div class="modal-footer">
+                            <button id="new_product_button" type="submit" class="btn btn-success"
+                                role="button">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

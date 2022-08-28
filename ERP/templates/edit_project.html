@@ -1,0 +1,160 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+{% block site_name %}Project: {{project_name}}{% endblock %}
+{% load mathfilters %}
+{% block site %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <div class="container my-5 ">
+
+                <div class="accordion" id="accordionPanelsStayOpen">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">Client information</button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                                    {{ client }}
+                                    <br>
+                                    <br>
+                                    <h5>Address:</h5>
+                                    {{ street }}/{{ house_number }}, {{ postal_code|make_list|slice:'0:2'|join:'' }}-{{ postal_code|make_list|slice:'2:5'|join:'' }} {{ town}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item"> <!-- Schedule -->
+                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                            {% if days_to_end < 0 %}
+                                <button class="accordion-button collapsed "  type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">Deadlines<i class="fa-solid fa-circle-exclamation px-2" style="color:red"></i></button>
+                            {% else %}
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">Deadlines</button>
+                            {% endif %}
+                        </h2>
+                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                                <div class="accordion-body">  
+                                    <h6>Start time:</h6>
+                                    {{ start_time }}
+                                    <br>
+                                    <br>
+                                    <h6>Scheduled end time:</h6>
+                                    {{ scheduled_end_time }}
+                                    <br>
+                                    <br>
+                                    <h6>End time:</h6>
+                                    {{ end_time }}
+                                    <br>
+                                    <br>
+                                    {% if project_completed %}
+                                        
+                                        {% if days_to_end < 0 %}
+                                            <h6 style="color:red">Completed {{ days_to_end|sub:days_to_end|sub:days_to_end }} days after deadline.</h6>
+                                        {% else %}
+                                            <h6 style="color:green">Completed {{ days_to_end }} days ahead of the schedule.</h6>
+                                        {% endif %}
+                                    
+                                    {% else %}
+                                    
+                                        {% if days_to_end < 0 %}
+                                            <h6 style="color:red">Delay</h6>
+                                             {{ days_to_end|sub:days_to_end|sub:days_to_end }}
+                                        {% else %}
+                                            <h6>Days to the end of the deadline:</h6>
+                                        {{ days_to_end }}
+                                        {% endif %}
+
+                                    {% endif %}
+                               </div>    
+                            </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">Description</button>
+                        </h2>
+                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                                <div class="accordion-body">  
+                                    {{ description }}
+                                </div>  
+                            </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">Financial preview</button>
+                        </h2>
+                            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                                <div class="accordion-body">
+                                    <canvas id="myChart" width="400" height="100"></canvas>
+                                        <script>
+                                        const ctx = document.getElementById('myChart').getContext('2d');
+                                        const myChart = new Chart(ctx, {
+
+
+                                            data: {
+                                                datasets: [{
+                                                    type: 'line',
+                                                    label: 'Budżet',
+
+                                                    data: [{{ budget }},{{ budget }},{{ budget }},{{ budget }}],
+                                                    backgroundColor: [
+                                                        'rgba(63, 195, 128, 0.2)',
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(63, 195, 128, 1)',
+                                                    ],
+                                                    }, {
+                                                    type: 'line',
+                                                    label: 'Koszty',
+                                                    data: [10000, 32000, 56000, 120000],
+                                                    backgroundColor: [
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 99, 132, 1)',
+                                                    ],
+                                                }],
+                                                labels: ['FV1111', 'FV2222', 'FV33333', 'FV444444']
+                                            },
+
+                                            options: {
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true
+                                                    }
+                                                    }
+                                            }
+                                        });
+                                        </script>
+
+                                    <div>
+                                        <h6>Budget from offer: {{ budget }}</h6>
+                                        <h6>Current cost: 120000</h6>
+                                        <h6>Projected profit: -20000 zł</h6>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">Data edit</button>
+                        </h2>
+                            <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                                <div class="accordion-body"> 
+                                    <div class="card" style="width: 32rem; margin-left: 2rem; margin-top: 2rem; border:none;">
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% if perms.auth.change_permission%}    
+                                                {% csrf_token %}
+                                                {{ form|bootstrap }}
+                                                <br>
+                                                <button type="submit" class="btn btn-primary" style="background-color: #0e4779; color:white;">Save</button>
+                                            {% else %}
+                                                <h6 style="color:red">You don't have permission to edit.</6>
+                                            {% endif %}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>               
+                <br>
+                <a href="{% url 'Projects' %}" class="btn btn-primary" style="background-color: #0e4779; color:white;">Back</a>
+            </div>
+{% endblock %}

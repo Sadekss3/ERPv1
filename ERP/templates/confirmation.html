@@ -1,0 +1,30 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+{% block tytul %} Confirmation {% endblock %}
+{% block site_name %}Confirmation{% endblock %}
+
+
+{% block site %}
+<div class="row my-5">
+    <div class="card" style="width: 32rem;">
+        <div class="card-body">
+            {% if perms.auth.change_permission%}  
+                <h5 class="card-title">Are you sure you want to delete: "{{ product.name }}{{ client.company_name}}"?</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            {% else %}
+                <h6 style="color:red">You don't have permission to remove.</6>
+                    <br>
+            {%endif%}
+            {% if product.name == null%}
+            <a class="btn btn-primary" href="{% url 'Clients' %}" type="button" style="margin-top: 10px">Back</a>
+            {% else %}
+            <a class="btn btn-primary" href="{% url 'Warehouse' %}" type="button" style="margin-top: 10px">Back</a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock%}

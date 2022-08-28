@@ -1,0 +1,109 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+
+{% block site_name %}Financial Management{% endblock %}
+{% block site %}
+
+<h3 style="color: hsl(221, 64%, 68%)">Work in progress</h3>
+<div class="container-fluid px-4">
+    <div class="row g-3 my-2">
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">zł</h3>
+                    <p class="fs-5">Suma Przychodów</p>
+                </div>
+                <i class="fa-solid fa-box-open fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2"> zł</h3>
+                    <p class="fs-5">Suma Kosztów</p>
+                </div>
+                <i class="fas fa-hand-holding-usd fs-1 border rounded-full secondary-bg p-3"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <form class="d-flex">
+            <input class="form-control" id="myInput" type="text" placeholder="Search">
+        </form>
+
+
+
+        <div class="col my-3">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <br>
+                <table id="MagTable" class="table bg-white rounded shadow-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Invoice Number</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Net Price</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">Gross Price</th>
+                            <th scope="col">Operations</th>
+                            <th scope="col">Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        {% for Invoice in invoice %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ Invoice.number }}</td>
+                            <td>{{ Invoice.client }}</td>
+                            <td>{{ Invoice.sales_date }}</td>
+                            <td>{{ Invoice.net_price }}</td>
+                            <td>{{ Invoice.TAX }}</td>
+                            <td>{{ Invoice.gross_price }}</td>
+                            <td><a id="edit_product_button" href="" class="btn btn-primary" role="button">Edit <i
+                                        class="fa-solid fa-pen-to-square film-icon"></i></a>
+                                <a id="remove_product_button" href="" class="btn btn-primary" role="button">Remove <i
+                                        class="fa-solid fa-trash film-icon"></i></a>
+                            </td>
+                            <td>{{ Invoice.payment_status }}</td>
+                        </tr>
+                        {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-1 my-2">
+        <div class="col-md-1">
+            <a id="new_product_button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#new_product"
+                role="button">New Document</a>
+        </div>
+    </div>
+    <!--    Modal nowy produkt-->
+    <div class="modal fade" id="new_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">New Document</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="form">               
+                        <a id="remove_product_button" href="" class="btn btn-primary" style="width: 230px" role="button">Sales Receipt</a><br><br>
+                        <a id="remove_product_button" href="" class="btn btn-primary" style="width: 230px" role="button">Purchase Receipt</a><br><br>
+                        <a id="remove_product_button" href="" class="btn btn-primary" style="width: 230px" role="button">Retail Sales Invoice</a><br><br>
+                        <a id="remove_product_button" href="" class="btn btn-primary" style="width: 230px" role="button">Retail Purchase Invoice</a><br><br>
+                        <a id="remove_product_button" href="{% url 'Invoice'%}" class="btn btn-primary" style="width: 230px" role="button">VAT Sales Invoice</a><br><br>
+                        <a id="remove_product_button" href="" class="btn btn-primary" style="width: 230px" role="button">VAT Purchase Invoice</a>
+                        <div class="modal-footer">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'main_template.html' %}
+{% load bootstrap %}
+
+{% block site_name %}Edit Product{% endblock %}
+
+
+{% block site %}
+<div class="container-fluid px-4">
+  <div class="card" style="width: 32rem; margin-left: 2rem; margin-top: 2rem; border:none;">
+    <form method="post" enctype="multipart/form-data">
+      {% if perms.auth.change_permission%}
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <br>
+        <button type="submit" class="btn btn-primary" style="background-color: #0e4779; color:white;">Save</button>
+      {% else %}
+        <h6 style="color:red">You don't have permission to edit.</6>
+      {% endif %}
+    </form>
+  </div>
+  <br>
+  <a href="{% url 'Warehouse' %}" class="btn btn-primary"
+    style="margin-left: 2rem; background-color: #0e4779; color:white;">Back</a>
+</div>
+{% endblock %}

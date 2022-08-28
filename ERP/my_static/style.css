@@ -1,0 +1,173 @@
+:root {
+  --main-bg-color: #432371;
+  --main-text-color: #0E497D;
+  --second-text-color: #bbbec5;
+  --second-bg-color: #99c1e1;
+}
+
+.primary-text {
+  color: var(--main-text-color);
+}
+
+.second-text {
+  color: var(--second-text-color);
+}
+
+.primary-bg {
+  background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+  background-color: var(--second-bg-color);
+}
+
+.rounded-full {
+  border-radius: 100%;
+}
+
+#wrapper {
+  background-color: F8F9FA;
+}
+
+#sidebar-wrapper {
+  background-color: #F6F7F9;
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.5s ease-out;
+  -moz-transition: margin 0.5s ease-out;
+  -o-transition: margin 0.5s ease-out;
+  transition: margin 0.5s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  cursor: pointer;
+  color: black;
+}
+
+.list-group-item {
+  border: none;
+  padding: 20px 30px;
+}
+
+.list-group-item.active {
+  background-color: transparent;
+  color: var(--main-text-color);
+  font-weight: bold;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+#new_product_button{
+   background-color: #0E497D;
+}
+#edit_product_button {
+   background-color: #0e4779;
+}
+#remove_product_button {
+   background-color: #0E497D;
+}
+#navbar-top{
+    background-color: #F6F7F9;
+}
+
+.table tbody tr.highlight th{
+    background-color: #99c1e1;
+}
+.table tbody tr.highlight td{
+    background-color: #99c1e1;
+}
+
+#navbarDropdown{
+    color: #0E497D;
+}
+
+.my-custom-scrollbar {
+position: relative;
+height: 300px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+#clock {
+  height: 52px;
+  width: 52px;
+  border-radius: 25px;
+  border: solid 2px rgb(43, 43, 43);
+  position: fixed;
+}
+
+#dot {
+  position: absolute;
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: rgb(0, 0, 0);
+  opacity: 100%;
+  right: 21px;
+  bottom: 21px;
+}
+
+#seconds-hand {
+  position: absolute;
+  height: 21px;
+  width: 2px;
+  background-color: rgb(0, 0, 0);
+  right: 22px;
+  bottom: 24px;
+  opacity: 50%;
+  transform-origin: 0% 100%;
+}
+
+#minutes-hand {
+  position: absolute;
+  height: 18px;
+  width: 2px;
+  background-color: rgb(0, 0, 0);
+  right: 22px;
+  bottom: 24px;
+  opacity: 75%;
+  transform-origin: 0% 100%;
+}
+
+#hours-hand {
+  position: absolute;
+  height: 12px;
+  width: 2px;
+  background-color: rgb(0, 0, 0);
+  right: 22px;
+  bottom: 24px;
+  transform-origin: 0% 100%;
+}
+
