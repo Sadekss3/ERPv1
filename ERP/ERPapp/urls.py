@@ -1,5 +1,5 @@
 from django.urls import path
-from ERPapp.views import Warehouse, Registration, Mainsite, Edit_product, Remove_produkt, Clients, Edit_client, Remove_client, Projects, Edit_project, Invoice__,Financial_Management
+from ERPapp.views import Warehouse, Registration, Mainsite, Edit_product, Remove_produkt, Clients, Edit_client, Remove_client, Projects, Edit_project, Invoice__,Financial_Management, checkProduct
 
 
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('Edit_project/<int:id>/', Edit_project, name="Edit_project"),
     path('Financial_Management', Financial_Management, name="Financial_Management"),
     path('Invoice', Invoice__, name="Invoice"),
+    path('get/ajax/validate/productname', checkProduct, name = "validate_product"),
 ]

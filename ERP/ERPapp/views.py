@@ -2,6 +2,7 @@ from datetime import date, datetime
 from itertools import product
 from math import prod
 from time import timezone
+from unicodedata import name
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Unit, Client, Project, Invoice, Unit
@@ -223,3 +224,21 @@ def my_view_function(request):
     }
 
     return JsonResponse(response)
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+def checkProduct(request):
+    if is_ajax(request=request) and request.method == "GET":
+        id_product = request.GET.get("id_product", None)
+        
+        if Product.objects.filter(pk = id_product).exists():
+            product = get_object_or_404(Product, pk=id_product)
+            return JsonResponse({"valid":False, "name": product.name}, status = 200)
+        else:
+            print(id_product)
+            return JsonResponse({"valid":True}, status = 200)
+            
+
+    return JsonResponse({}, status = 400)
+    

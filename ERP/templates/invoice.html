@@ -38,9 +38,11 @@
         }
     }
     </script>
+    
 
 
 <form method="post" onchange=change()>
+    {% csrf_token %}
     <div class="container-fluid px-4">
         
         <div class="row g-3 my-2">
@@ -74,8 +76,10 @@
             <div class="col my-3 g-3">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <br>
+                        
                         <input type="button" id="addPOIbutton" value="Add POIs" /><br/><br/>
                         <table  id="emptbl" class="table bg-white rounded shadow-sm  table-hover">
+                            
  
                                 <tr>
                                     <th scope="col">No</th>
@@ -88,8 +92,6 @@
                                 <tr>
                                     <th id="col0" >1</th>
                                     <th id="col1" >{{ form.product|bootstrap }}</th>
-                                    <th id="col2" >{{ form.product|bootstrap }}</th>
-                                    <th id="col3" >{{ form.product|bootstrap }}</th>
                                     <td><input type="button" value="Add Row" onclick="addRows()" /></td> 
                                     <td><input type="button" value="Delete Row" onclick="deleteRows()" /></td> 
                                 </tr>
@@ -120,5 +122,31 @@
         </div>    
     </div>
 </form>
-
+<script>
+    $("#id_product").focusout(function (e) {
+        e.preventDefault();
+        // get the nickname
+        var id_product = $(this).val();
+        console.log(id_product)
+        // GET AJAX request
+        
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'validate_product' %}",
+            data: {"id_product": id_product},
+            success: function (response) {
+                // if not valid user, alert the user
+                if(!response["valid"]){
+                    alert(`dupa = ${response["name"]}`);
+                    var id_product = $("#id_product");
+                }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    })
+</script>
 {% endblock %}
+
+    
