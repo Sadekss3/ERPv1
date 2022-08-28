@@ -109,6 +109,7 @@
 
 #navbarDropdown{
     color: #0E497D;
+    position: relative;
 }
 
 .my-custom-scrollbar {
@@ -125,7 +126,7 @@ display: block;
   width: 52px;
   border-radius: 25px;
   border: solid 2px rgb(43, 43, 43);
-  position: fixed;
+  position: relative;
 }
 
 #dot {

@@ -2,6 +2,7 @@ from datetime import date, datetime
 from itertools import product
 from math import prod
 from time import timezone
+from tkinter.messagebox import NO
 from unicodedata import name
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -231,13 +232,19 @@ def is_ajax(request):
 def checkProduct(request):
     if is_ajax(request=request) and request.method == "GET":
         id_product = request.GET.get("id_product", None)
-        
+        amount = request.GET.get("Amount", None)
+        amount = float(amount)
         if Product.objects.filter(pk = id_product).exists():
             product = get_object_or_404(Product, pk=id_product)
-            return JsonResponse({"valid":False, "name": product.name}, status = 200)
+            TAX = 0.23
+            gross_price = amount * product.price
+            gross_price = gross_price + (gross_price * TAX)
+            print(gross_price)
+            
+            return JsonResponse({"valid":True, "name": product.name, "unit": product.unit, "in_stock": product.quantity, "price": product.price, "TAX": TAX, "gross_Price": gross_price}, status = 200)
         else:
             print(id_product)
-            return JsonResponse({"valid":True}, status = 200)
+            return JsonResponse({"valid":False}, status = 200)
             
 
     return JsonResponse({}, status = 400)

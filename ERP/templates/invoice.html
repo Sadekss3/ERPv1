@@ -4,7 +4,7 @@
 {% load mathfilters %}
 {% block site %}
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function addRows(){ 
         var table = document.getElementById('emptbl');
         var rowCount = table.rows.length;
@@ -38,7 +38,7 @@
         }
     }
     </script>
-    
+     -->
 
 
 <form method="post" onchange=change()>
@@ -77,75 +77,65 @@
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <br>
                         
-                        <input type="button" id="addPOIbutton" value="Add POIs" /><br/><br/>
                         <table  id="emptbl" class="table bg-white rounded shadow-sm  table-hover">
-                            
- 
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Unit</th>
                                     <th scope="col">In Stock</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">TAX</th>
+                                    <th scope="col">Gross Price</th>
                                 </tr>
-
-
                                 <tr>
                                     <th id="col0" >1</th>
-                                    <th id="col1" >{{ form.product|bootstrap }}</th>
-                                    <td><input type="button" value="Add Row" onclick="addRows()" /></td> 
-                                    <td><input type="button" value="Delete Row" onclick="deleteRows()" /></td> 
+                                    <th id="col1" >{{ form.product }} </th>
+                                    <td id="col2"><label id="in_stock_label">None</label></td>
+                                    <td id="col3"><label id="unit_label">None</label></td>   
+                                    <td id="col4"><label id="price_label">None</label></td>
+                                    <td id="col5"><input id="Amount" value="0" onchange="dupa()"></td>    
+                                    <td id="col6"><label id="TAX"></label></td> 
+                                    <td id="col7"><label id="Gross_Price">0</label></td>                           
                                 </tr>
                         </table>
-                        <table> 
-                            <tr> 
-                                
-                                <td><input type="submit" value="Submit" /></td> 
-                            </tr>  
-                        </table>
-                        <!-- <table id="emptbl" class="table bg-white rounded shadow-sm  table-hover">
-                            <tr>
-                                <th>Employee Name</th>
-                            </tr> 
-                            <tr> 
-                                <td id="col0"><input type="text" name="empname[]" value="" /></td> 
-                            </tr>  
-                        </table> 
-                        <table> 
-                            <tr> 
-                                <td><input type="button" value="Add Row" onclick="addRows()" /></td> 
-                                <td><input type="button" value="Delete Row" onclick="deleteRows()" /></td> 
-                                <td><input type="submit" value="Submit" /></td> 
-                            </tr>  
-                        </table>  -->
                     </div>
             </div>
         </div>    
     </div>
 </form>
 <script>
-    $("#id_product").focusout(function (e) {
-        e.preventDefault();
-        // get the nickname
-        var id_product = $(this).val();
-        console.log(id_product)
-        // GET AJAX request
+    product = document.getElementById("id_product");
+    product.onchange = dupa;
+
+    function dupa(e) {
+        var id_product = $("#id_product").val();
+        var amount = $("#Amount").val();
         
         $.ajax({
             type: 'GET',
             url: "{% url 'validate_product' %}",
-            data: {"id_product": id_product},
+            data: {"id_product": id_product, "Amount": amount},
             success: function (response) {
-                // if not valid user, alert the user
-                if(!response["valid"]){
-                    alert(`dupa = ${response["name"]}`);
-                    var id_product = $("#id_product");
+                if(response["valid"]){
+                    const unit_label = document.querySelector('#unit_label');
+                    unit_label.innerHTML = response["unit"];
+                    const in_stock_label = document.querySelector('#in_stock_label');
+                    in_stock_label.innerHTML = response["in_stock"];
+                    const price_label = document.querySelector('#price_label');
+                    price_label.innerHTML = response["price"] + " zł";
+                    const TAX_label = document.querySelector('#TAX');
+                    var TAX = response["TAX"] * 100;
+                    TAX_label.innerHTML = TAX + ' %';
+                    Gross_Price.innerHTML = response["gross_Price"] + " zł";
                 }
             },
             error: function (response) {
                 console.log(response)
             }
         })
-    })
+    };
+
 </script>
 {% endblock %}
 
