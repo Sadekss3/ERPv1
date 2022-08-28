@@ -238,8 +238,7 @@ def checkProduct(request):
             product = get_object_or_404(Product, pk=id_product)
             TAX = 0.23
             gross_price = amount * product.price
-            gross_price = gross_price + (gross_price * TAX)
-            print(gross_price)
+            gross_price = round(gross_price + (gross_price * TAX), 2)
             
             return JsonResponse({"valid":True, "name": product.name, "unit": product.unit, "in_stock": product.quantity, "price": product.price, "TAX": TAX, "gross_Price": gross_price}, status = 200)
         else:
